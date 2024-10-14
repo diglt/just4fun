@@ -1,4 +1,5 @@
 import re
+import time
 import random
 import requests
 import prettytable
@@ -9,7 +10,12 @@ my_Mail = None
 my_Password = None
 my_Username = None
 
+ESC = '\x1b'
+
 def GetEmail():
+    print(ESC + '[31m' + 'Generating email...')
+    time.sleep(1)
+
     placebo = mechanicalsoup.StatefulBrowser()
 
     try:
@@ -31,6 +37,9 @@ def GetEmail():
                         # Convert Match object to string (the full email)
                         matched_email = match.group(0)  # group(0) returns the entire match
 
+                        print(ESC + '[32m' + "Successfully found email!")
+                        time.sleep(1)
+
                         return matched_email
                     else:
                         print("No email found.")
@@ -41,6 +50,9 @@ def GetEmail():
 
 
 def GeneratePassword():
+    print(ESC + '[31m' + 'Generating password...')
+    time.sleep(1)
+
     password = ""
     password_length = random.randint(10, 20)
 
@@ -69,11 +81,19 @@ def GeneratePassword():
                     password += new_value
             else:
                 true_index += 1
+
+    print(ESC + '[32m' + "Successfully generated password!")
+    time.sleep(1)
+
     return password
 
 
 
 def GenerateUsername():
+    print(ESC + '[31m' + 'Generating username...')
+    time.sleep(1)
+
+
     response = requests.get('https://randomuser.me/api/')
     data = response.json()
 
@@ -86,6 +106,10 @@ def GenerateUsername():
         new_dude += added_characters[random.randint(0, (len(added_characters) - 1))]
 
     username = data['results'][0]['login']['username'] + new_dude
+
+    print(ESC + '[32m' + "Successfully generated username!")
+    time.sleep(1)
+
     return username
 
 
@@ -95,6 +119,22 @@ def Layout_Info(Username, Password, Email):
     layout_table.add_column("Username", [Username])
     layout_table.add_column("Password", [Password])
     layout_table.add_column("Email", [Email])
+
+    print(ESC + '[2J')
+    print(ESC + '[37m' + " ")
+    
+    my_logo = r"""
+    ██╗   ██╗██████╗ ██╗███╗   ██╗███████╗ ██████╗ 
+    ██║   ██║██╔══██╗██║████╗  ██║██╔════╝██╔═████╗
+    ██║   ██║██████╔╝██║██╔██╗ ██║█████╗  ██║██╔██║
+    ██║   ██║██╔══██╗██║██║╚██╗██║██╔══╝  ████╔╝██║
+    ╚██████╔╝██║  ██║██║██║ ╚████║██║     ╚██████╔╝
+    ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝      ╚═════╝    
+                                            __               ___       __            
+                                            |__) \ /    |\ | |__  |  | |__)  /\  |    
+                                            |__)  |     | \| |___ \__/ |  \ /~~\ |___ 
+            """
+    print(my_logo)
     print(layout_table)
 
 
