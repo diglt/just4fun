@@ -1,12 +1,9 @@
 import re
-import time
 import random
 import requests
 import prettytable
 import mechanicalsoup
 import bs4 as beautifulsoup
-
-from selenium import webdriver
 
 my_Mail = None
 my_Password = None
