@@ -2,8 +2,8 @@
 
 
 
-
 import re
+import os
 import time
 import random
 import requests
@@ -14,6 +14,18 @@ import bs4 as beautifulsoup
 my_Mail = None
 my_Password = None
 my_Username = None
+
+my_logo = r"""
+  ██╗   ██╗██████╗ ██╗███╗   ██╗███████╗ ██████╗ 
+  ██║   ██║██╔══██╗██║████╗  ██║██╔════╝██╔═████╗
+  ██║   ██║██████╔╝██║██╔██╗ ██║█████╗  ██║██╔██║
+  ██║   ██║██╔══██╗██║██║╚██╗██║██╔══╝  ████╔╝██║
+  ╚██████╔╝██║  ██║██║██║ ╚████║██║     ╚██████╔╝
+  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝      ╚═════╝    
+                            __               ___       __            
+                            |__) \ /    |\ | |__  |  | |__)  /\  |    
+                            |__)  |     | \| |___ \__/ |  \ /~~\ |___ 
+            """
 
 ESC = '\x1b'
 
@@ -127,18 +139,7 @@ def Layout_Info(Username, Password, Email):
 
     print(ESC + '[2J')
     print(ESC + '[37m' + " ")
-    
-    my_logo = r"""
-  ██╗   ██╗██████╗ ██╗███╗   ██╗███████╗ ██████╗ 
-  ██║   ██║██╔══██╗██║████╗  ██║██╔════╝██╔═████╗
-  ██║   ██║██████╔╝██║██╔██╗ ██║█████╗  ██║██╔██║
-  ██║   ██║██╔══██╗██║██║╚██╗██║██╔══╝  ████╔╝██║
-  ╚██████╔╝██║  ██║██║██║ ╚████║██║     ╚██████╔╝
-  ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝      ╚═════╝    
-                            __               ___       __            
-                            |__) \ /    |\ | |__  |  | |__)  /\  |    
-                            |__)  |     | \| |___ \__/ |  \ /~~\ |___ 
-            """
+
     print(my_logo)
     print(layout_table)
 
@@ -148,5 +149,21 @@ my_Username = GenerateUsername()
 my_Mail = GetEmail()
 
 Layout_Info(my_Username, my_Password, my_Mail)
+
+
+try:
+    temp_directory = os.getenv('TEMP')
+
+    file_name = 'My_Generated_Information.txt'
+    file_path = os.path.join(temp_directory, file_name)
+    
+    with open(file_path, "w") as file:
+        file.write(f"USERNAME: {my_Username}\n")
+        file.write(f"PASSWORD: {my_Password}\n")
+        file.write(f"EMAIL: {my_Mail}")
+
+        print("Saved output to: ", file.name)
+except:
+    print("failed to open...")
 
 Choice = input("\n")
