@@ -1,6 +1,9 @@
 ## Generates a random username, password and email for you to use :)
 
-
+## pip install:
+## prettytable
+## mechanicalsoup
+## bs4
 
 import re
 import os
